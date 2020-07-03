@@ -57,6 +57,7 @@ html >::-webkit-scrollbar-thumb:hover {
   background: #ff5722;
 }
 body {
+  cursor: url("https://jantok-1302532854.cos.ap-guangzhou.myqcloud.com/img/hexo/base/mouce-click.cur"), auto;
   background-color: #f4f4f4;
   text-rendering: optimizelegibility;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -3161,9 +3162,11 @@ footer {
   padding: 40px 10px 120px 10px;
   width: 100%;
   color: rgba(0,0,0,0.5);
-  margin: 0px auto;
+  margin: 10px auto;
   overflow: hidden;
   text-align: center;
+  background: rgba(255,255,255,0.8);
+  border-radius: 10px;
 }
 footer,
 footer p {
