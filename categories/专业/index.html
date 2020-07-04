@@ -294,8 +294,8 @@
         
           
   <h2 class="title">
-    <a href="/2020/06/30/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%9F%BA%E7%A1%80%E8%AE%B0%E5%BD%95/">
-      markdown练习
+    <a href="/2020/07/04/Hexo%E7%BD%91%E7%AB%99%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE/">
+      Hexo网站博客搭建与基础配置
     </a>
   </h2>
 
@@ -333,7 +333,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年6月30日</p>
+    <p>发布于：2020年7月4日</p>
   </a>
 </div>
 
@@ -344,13 +344,13 @@
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fas fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：0字</p>
+      <p>字数：875字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fas fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：1分钟</p>
+      <p>时长：3分钟</p>
     </a>
   </div>
 
@@ -374,7 +374,75 @@
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>本篇会介绍如何使用<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>框架快速搭建一个博客网站。</p>
+<!-- about -->
+<p>你必须具备以下知识储备：</p>
+<ul>
+<li>对于环境配置以及命令行等操作熟悉</li>
+<li>对于Github有初步的认识和了解</li>
+<li>有自己查阅文档的能力</li>
+</ul>
+<p>如果有以下知识储备，那就更好了：</p>
+<ul>
+<li>会编写css样式</li>
+<li>对前端项目有大致的了解</li>
+<li>非常熟悉git命令行</li>
+</ul>
+<h2 id="项目安装配置"><a href="#项目安装配置" class="headerlink" title="项目安装配置"></a>项目安装配置</h2><p>  若以下相关配置您的环境已经配置了，可自行跳过。</p>
+<h3 id="命令行工具"><a href="#命令行工具" class="headerlink" title="命令行工具"></a>命令行工具</h3><p>  linux与mac下自带的命令行环境已经足够便捷于开发，笔者使用的是mac环境。对于windows推荐，推荐安装Git Bash命令行工具<br><br>  非常不推荐使用<strong>黑窗窗</strong>（也就是cmd）进行开发于运行。对于Git Bash的安装，推荐<a href="https://blog.csdn.net/weixin_41714277/article/details/79399270" target="_blank" rel="noopener">这个教程</a>。<br><br>  配置完成之后，输入以下命令行：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git version</span><br></pre></td></tr></table></figure><br>  看到有输出为：</p>
+<blockquote>
+<p>git version x (y)</p>
+</blockquote>
+<p>  则表示配置完成。x表示版本号，y为其他附加信息。</p>
+<h3 id="NodeJs"><a href="#NodeJs" class="headerlink" title="NodeJs"></a>NodeJs</h3><p>  Hexo基于nodeJs环境所进行开发。<br><br>  <a href="https://www.cnblogs.com/isme-zjh/p/12729571.html" target="_blank" rel="noopener">windows安装教程</a><br><br>  输入以下命令，有版本号输出即安装完成：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ul>
+<li><p>新建一个文件夹，用来存放博客的文件。</p>
+</li>
+<li><p>在命令行下进入到该文件夹页面。使用cd命令，或者windows用户可以在点击进入该文件夹的情况下，右键，然后点击 <strong>git base here</strong>表示在该文件夹路径下大概git命令行。</p>
+</li>
+<li><p>使用hexo命令进行安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g hexo</span><br></pre></td></tr></table></figure>
+<p>等待命令跑完，且正常后，输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p>表示用hexo初始化创建该文件夹。之后该文件夹下会生成如下文件：<br></p>
+</li>
+<li><p>node_modules：用来存放安装的依赖包，一般不需要管理。</p>
+</li>
+<li><p>public：存放hexo自动生成的页面文件。</p>
+</li>
+<li><p>scaffolds：用于生成文章的格式模板。</p>
+</li>
+<li><p>source：用于存放各种生成的文章（在该文件夹下使用markdown语法编写md文件后，hexo会<strong>自动生成对应的web页面</strong>）</p>
+</li>
+<li><p>themes：用于存放主题文件夹。</p>
+</li>
+<li><p>_config.yml: （<strong>重要</strong>）在此对整个hexo项目进行配置。</p>
+</li>
+<li><p>db.json: source文件夹的解析文件，一般不需要管理。</p>
+</li>
+<li><p>package.json：项目所需的配置信息管理，一般不需要管理。</p>
+<h2 id="运行hexo"><a href="#运行hexo" class="headerlink" title="运行hexo"></a>运行hexo</h2><p>首选，输入以下命令，对整个hexo项目进行清理。<br><br>（每次改动后在运行之前，都需要进行清理，必须要养成这样习惯）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+<p>然后，生成网页文件。其中g是<strong>generate</strong>的简写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<p>然后，运行hexo项目。s是<strong>service</strong>的简写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>接着你就会看到如下提示，则表示运行成功：</p>
+<blockquote>
+<p>INFO  Start processing<br>INFO  Hexo is running at <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> . Press Ctrl+C to stop.</p>
+</blockquote>
+<p>若看到如下页面:</p>
+<blockquote>
+<p>FATAL Port 4000 has been used. Try other port instead.<br>FATAL Something’s wrong. Maybe you can find the solution here: <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">https://hexo.io/docs/troubleshooting.html</a></p>
+</blockquote>
+<p>则表示项目<strong>端口已被占用</strong>。项目默认运行端口为4000，可以在配置文件中进行修改。<br><br>若项目运行正常，则在游览器中复制打开显示的localhost网址，你就会看到如下页面：<br><br><img src="https://jantok-1302532854.cos.ap-guangzhou.myqcloud.com/img/hexo/post/2020-07-04-01.png" alt="项目正常"><br>则表示运行成功。其中你所看到的是hexo的默认主题，后续可进行更改。<br><br>这步操作中所用到的三条命令行<strong>clean，g，s</strong>是hexo的三部曲，要熟记，后面还有<strong>d-deploy</strong>表示发布。</p>
+<br>
+至此，则hexo的基础搭建完成。
+
+
+</li>
+</ul>
+
       
     </div>
     
@@ -483,11 +551,6 @@
             title="/categories/%E4%B8%93%E4%B8%9A/" href="/categories/%E4%B8%93%E4%B8%9A/"
             id="categoriesE4B893E4B89A"
             ><div class='name'>专业</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E5%85%B6%E4%BB%96/" href="/categories/%E5%85%B6%E4%BB%96/"
-            id="categoriesE585B6E4BB96"
-            ><div class='name'>其他</div><div class='badge'>(1)</div></a></li>
         
       </ul>
     </div>
