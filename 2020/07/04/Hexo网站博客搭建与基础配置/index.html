@@ -307,9 +307,9 @@
               
   
   <div class='new-meta-item category'>
-    <a href='/categories/%E4%B8%93%E4%B8%9A/' rel="nofollow">
+    <a href='/categories/%E5%89%8D%E7%AB%AF/' rel="nofollow">
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <p>专业</p>
+      <p>前端</p>
     </a>
   </div>
 
@@ -346,7 +346,7 @@
           
           <p>本篇会介绍如何使用<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>框架快速搭建一个博客网站。</p>
 <!-- about -->
-<p>你必须具备以下知识储备：</p>
+<p>学习本篇前，你必须具备以下知识储备：</p>
 <ul>
 <li>对于环境配置以及命令行等操作熟悉</li>
 <li>对于Github有初步的认识和了解</li>
@@ -354,9 +354,38 @@
 </ul>
 <p>如果有以下知识储备，那就更好了：</p>
 <ul>
-<li>会编写css样式</li>
 <li>对前端项目有大致的了解</li>
 <li>非常熟悉git命令行</li>
+</ul>
+<h2 id="什么是Hexo？为什么选择Hexo？"><a href="#什么是Hexo？为什么选择Hexo？" class="headerlink" title="什么是Hexo？为什么选择Hexo？"></a>什么是Hexo？为什么选择Hexo？</h2><p>  最初在笔者想搭建一个私人博客用于记录整理一些前端知识点的时候，在不了解当前博客技术的情况下，很自然而然的想到了需要非常多的技术栈才能完成<br></p>
+<ul>
+<li><p>一个<strong>好看的前端</strong>。</p>
+</li>
+<li><p>为了有一个好看的前端你可能还需要先绘画出<strong>前端原型图</strong>。</p>
+</li>
+<li><p>一个的后端，这个后端可能还需要有很强的<strong>健壮性</strong>。</p>
+</li>
+<li><p>一台<strong>云服务器</strong>，需要对服务器端有一定知识了解，甚至可能还需要对服务器的普通配置以及攻击防御等配置有一定的了解。</p>
+</li>
+<li><p>一个域名。</p>
+</li>
+<li><p>通过什么样的方式写一篇博客并且保存，每次都创建一个新页面？</p>
+</li>
+<li><p>。。。</p>
+<p>在设想了这么多之后，会发现所需的技术栈以及要考虑的东西越来越多，甚至已经可以独立超脱出来成为一个产品了。<br><br>而我们最初的想法，仅仅只是想搭建一个博客，用于完成一些普遍的需求而已。<br><br>但按照上面的设想，这对于搭建人员的技术要求是否太高了，甚至对于一些非技术人员，但又想搭建一个自己博客的人来说，真的就是遥不可及了么<br></p>
+<p>那么，在如今各种插件包与框架百花齐放的时代，有没有什么既可以<strong>快速搭建一个五脏六腑俱全的博客</strong>，又可以<strong>自定义属于自己的、好看的前端样式</strong>，如果可以甚至<strong>对代码能力需求较弱</strong>的博客框架出现呢？<br><br>有，而且主流的博客非常的多，如Wordpress等。<br><br>那为什么选择<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>框架呢？因为它真的很简单。<br></p>
+<p>对于Hexo是什么，可以进去官网查看文档，了解以下。对于技术人员来说，会自行查看文档解决，自我解决问题是一个必备的能力。<br><br>而如果并没有兴趣进行文档查阅，你只需要知道以下几点即可：</p>
+</li>
+<li><p>Hexo可以把你用<a href="https://www.jianshu.com/p/9eee76a2023d" target="_blank" rel="noopener">markdown</a>所写成的文章，自动生成对应的html<strong>静态页面</strong>。</p>
+</li>
+<li><p>截止到目前2020/07/04，官网上已经拥有超过311种主题。</p>
+</li>
+<li><p>高度定制化，你可以自定义文章的样式、主题的样式。如果有一定代码能力，你甚至可以去修改主题源码。</p>
+</li>
+<li><p><strong>不需要后端</strong>，这一点非常重要。</p>
+</li>
+<li><p>你甚至可以<strong>不需要云服务器</strong>，连<strong>域名</strong>都不需要，0成本直接挂载到github上，并且拥有自己的域名。但通过github挂载的方式，您的网站不能够被收录与百度或者是google中，也就是不可被搜索到。</p>
+</li>
 </ul>
 <h2 id="项目安装配置"><a href="#项目安装配置" class="headerlink" title="项目安装配置"></a>项目安装配置</h2><p>  若以下相关配置您的环境已经配置了，可自行跳过。</p>
 <h3 id="命令行工具"><a href="#命令行工具" class="headerlink" title="命令行工具"></a>命令行工具</h3><p>  linux与mac下自带的命令行环境已经足够便捷于开发，笔者使用的是mac环境。对于windows推荐，推荐安装Git Bash命令行工具<br><br>  非常不推荐使用<strong>黑窗窗</strong>（也就是cmd）进行开发于运行。对于Git Bash的安装，推荐<a href="https://blog.csdn.net/weixin_41714277/article/details/79399270" target="_blank" rel="noopener">这个教程</a>。<br><br>  配置完成之后，输入以下命令行：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git version</span><br></pre></td></tr></table></figure><br>  看到有输出为：</p>
@@ -473,7 +502,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-05T09:46:44+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-05T10:31:55+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2020年7月5日</p>
@@ -549,6 +578,24 @@
 
         
         
+          <div class="prev-next">
+            
+              <a class='prev' href='/2020/07/05/Hexo%E7%BD%91%E7%AB%99%E6%B7%BB%E5%8A%A0%E4%B8%BB%E9%A2%98%E5%8F%8A%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>手把手教你Hexo网站添加主题及个性化配置</p>
+                <p class='content'>本篇会介绍如何使用Hexo主题，并且进行个性化配置。
+
+学习本篇前，你必须具备以下知识储备：
+
+已经安装且运行了Hexo。
+对前端知识有初步的基础认识。
+有自己查阅文档的能力。
+
+如果有以下知识...</p>
+              </a>
+            
+            
+          </div>
+        
       </section>
     </article>
   
@@ -616,7 +663,7 @@
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#项目安装配置"><span class="toc-text">项目安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行工具"><span class="toc-text">命令行工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NodeJs"><span class="toc-text">NodeJs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Hexo"><span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行hexo"><span class="toc-text">运行hexo</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是Hexo？为什么选择Hexo？"><span class="toc-text">什么是Hexo？为什么选择Hexo？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目安装配置"><span class="toc-text">项目安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行工具"><span class="toc-text">命令行工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NodeJs"><span class="toc-text">NodeJs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Hexo"><span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行hexo"><span class="toc-text">运行hexo</span></a></li></ol>
     </div>
   </section>
 
