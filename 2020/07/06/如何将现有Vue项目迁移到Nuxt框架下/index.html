@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta name="renderer" content="webkit">
@@ -18,8 +16,13 @@
 
   <!-- 页面元数据 -->
   
-    <title>归档 - JantoK&#39;s blog</title>
+    <title>如何将现有Vue项目迁移到Nuxt框架下 - JantoK&#39;s blog</title>
   
+    <meta name="keywords" content="nuxt,vue">
+  
+  
+    <meta name="description" content="本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
+公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到nuxt框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不...">
   
 
   <!-- feed -->
@@ -70,75 +73,7 @@
 
 <body>
   
-  <div class="cover-wrapper">
-    
-      <cover class='cover  half'>
-        <div class='cover-body'>
-  <div class='a'>
-    
-    
-      <p class="title">JantoK's blog</p>
-    
-    
-      <p class="subtitle">simple is the best.</p>
-    
-  </div>
-  <div class='b'>
-    
-      <div class="m_search">
-        <form name="searchform" class="form u-search-form">
-          <input type="text" class="input u-search-input" placeholder="通往新世界的入口" />
-          <i class="icon fas fa-search fa-fw"></i>
-        </form>
-      </div>
-    
-    <div class='menu navigation'>
-      <ul class='cover-list-h'>
-        
-          
-            <li>
-              <a class="nav home"
-                href="/"
-                
-                
-                id="home">
-                <i class='fas fa-book fa-fw'></i>博客
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/archives"
-                
-                
-                id="archives">
-                <i class='fas fa-history fa-fw'></i>归档
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="https://github.com/JantoK"
-                
-                  rel="external nofollow noopener noreferrer"
-                
-                
-                  target="_blank"
-                
-                id="https:githubcomJantoK">
-                <i class='fas fa-file-code fa-fw'></i>代码
-              </a>
-            </li>
-          
-        
-      </ul>
-    </div>
-  </div>
-</div>
-
-      </cover>
-    
-    <div id="loading-bar-wrapper">
+  <div id="loading-bar-wrapper">
   <div id="loading-bar"></div>
 </div>
 <header class="l_header shadow blur">
@@ -327,123 +262,176 @@
 
 <script>setLoadingBarProgress(40);</script>
 
-  </div>
 
 
-  <div class="l_body">
+  <div class="l_body nocover">
     <div class='body-wrapper'>
       
 
 <div class='l_main'>
-	
-	  <article id="archive-page" class="post article white-box reveal shadow">
-	    <section class="archive">
-	      
-	          <div class="archive-item archive-year mark">
-	            <h2>2020</h2>
-	          </div>
-	      
-	          <div class="archive-item archive-post mark">
-	            <a href="/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/">
-	              <time>07-06</time>
-	              <span class="title">
-	                
-	                  如何将现有Vue项目迁移到Nuxt框架下
-	                
-	                
-									
-									
-	              </span>
-	            </a>
-	          </div>
-	      
-	          <div class="archive-item archive-post mark">
-	            <a href="/2020/07/05/Hexo%E7%BD%91%E7%AB%99%E6%B7%BB%E5%8A%A0%E4%B8%BB%E9%A2%98%E5%8F%8A%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/">
-	              <time>07-05</time>
-	              <span class="title">
-	                
-	                  手把手教你Hexo网站添加主题及个性化配置
-	                
-	                
-									
-									
-	              </span>
-	            </a>
-	          </div>
-	      
-	          <div class="archive-item archive-post mark">
-	            <a href="/2020/07/04/Hexo%E7%BD%91%E7%AB%99%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE/">
-	              <time>07-04</time>
-	              <span class="title">
-	                
-	                  Hexo网站博客搭建与基础配置
-	                
-	                
-									
-									
-	              </span>
-	            </a>
-	          </div>
-	      
-	    </section>
-	  </article>
-	
-</div>
-<aside class='l_side'>
   
+
+  
+    <article id="post" class="post white-box reveal shadow article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+      
+      
+      <div class="meta" id="header-meta">
+        
+          
+  <h1 class="title">
+    <a href="/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/">
+      如何将现有Vue项目迁移到Nuxt框架下
+    </a>
+  </h1>
+
+
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a href="http://129.211.78.206" rel="nofollow">
+    <img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/avatar.jpg">
+    <p>JantoK</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/%E5%89%8D%E7%AB%AF/' rel="nofollow">
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <p>前端</p>
+    </a>
+  </div>
+
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2020年7月6日</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+        </div>
+        
+          <hr>
+        
+      </div>
+    
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          
+          <p>本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。</p>
+<p>公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到<a href="https://www.nuxtjs.cn/" target="_blank" rel="noopener">nuxt</a>框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不再做论述。</p>
+<a id="more"></a>
+
+
+
+<p>学习本篇前，你必须具备以下知识储备：</p>
+<ul>
+<li>熟悉Vue项目。</li>
+<li>对Nuxt项目有一定的初步了解。</li>
+<li>有自己查阅文档的能力。</li>
+</ul>
+<hr>
+<p>对于项目的基础迁移步骤，可以参考<a href="https://segmentfault.com/a/1190000019909396?utm_source=tag-newest" target="_blank" rel="noopener">这篇文章</a>，里面都有非常详细的记载，但也是仅供参考，因为不同的项目也是有一定的区别。</p>
+<p>翻阅了一下之前在做迁移的时候所记录的文档，总结下几个大坑，如果里面有你所遇到的，希望能帮到你。</p>
+<ul>
+<li>如何将vue-router适配到nuxt的路由管理中？</li>
+<li>如何适配并封装axios？</li>
+<li>如何将vue.config.js适配到nuxt.config.js中？</li>
+<li>全局型plugins该如何引入？</li>
+</ul>
+<hr>
+<h2 id="你必须先知道的一些坑"><a href="#你必须先知道的一些坑" class="headerlink" title="你必须先知道的一些坑"></a>你必须先知道的一些坑</h2><p>在迁移的时候，有遇到一些大坑，翻阅文档，结合stackoverflow才摸透。因为国内环境中使用nuxt的人并不多，生态还不是很完善，所以踩到一些坑的时候并不是能很快排查解决。</p>
+<p>这里先提出几个你必须要知道的几个坑，后面的文章里也是默认你已经熟知这几点。（<strong>其实我感觉整篇文章最精华的就是这里了</strong>）</p>
+<h3 id="什么是nuxt"><a href="#什么是nuxt" class="headerlink" title="什么是nuxt"></a>什么是nuxt</h3><p>对于nuxt，官方是这么介绍的：</p>
+<blockquote>
+<p>Nuxt.js 是一个基于 Vue.js 的<strong>通用应用框架</strong>。</p>
+</blockquote>
+<p>他集成了vue，vue-router，vuex等等一些较为基础和重要的组件/框架。</p>
+<p>（也是因为集成的原因，所以无法从cdn引入vue，因为框架内已集成，再从cdn引入会<strong>重复打包</strong>，目前还没有找到相关解决办法）</p>
+<h3 id="spa与ssr"><a href="#spa与ssr" class="headerlink" title="spa与ssr"></a>spa与ssr</h3><p>关于什么是spa与ssr，网上的资料已经非常全面了。这里说一下会踩到的坑。在ssr模式下，nuxt会先进行服务端的解析，再进行客户端的解析。于是乎在运行的时候，就会触发一些变量、组件等undefined的情况。</p>
+<p>这里以最典型的window对象为例，在项目中如果要使用window对象，并且还是在客户端解析前（如created生命周期内），就会触发undefind的问题。</p>
+<p>解决办法是，更换为在服务端解析后的生命周期（如mouted生命周期）内执行，或者是加入以下代码进行判断：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.browser) &#123;</span><br><span class="line">      ........</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在迁移的过程中你会遇到非常非常多次这个问题，而解决办法就是如此的简单，仅需一行代码。</p>
+<h3 id="万物都是plugins"><a href="#万物都是plugins" class="headerlink" title="万物都是plugins"></a>万物都是plugins</h3><p>在nuxt下，许许多多的组件以及配置，都是通过plugins的形式完成配置。这里也会涉及到axios、localstorage等的封装。</p>
+<p>而在plugins进行引入的时候，也要注意下是否开启ssr。</p>
+<h2 id="将vue-router迁移到nuxt的路由管理中"><a href="#将vue-router迁移到nuxt的路由管理中" class="headerlink" title="将vue-router迁移到nuxt的路由管理中"></a>将vue-router迁移到nuxt的路由管理中</h2><p>在nuxt与vue中，有一个最为明显的区别就是nuxt采用的是根据pages页面的路径自动生成所对应的路由。所以在项目的迁移中，这里也是花费时间最多的模块。</p>
+<p>迁移方案有两种：</p>
+<ol>
+<li>沿用旧的vue-router结构，使用官方提供的的<a href="https://github.com/nuxt-community/router-module" target="_blank" rel="noopener">@nuxtjs/router</a>插件，以读取沿用旧的router.js文件配置。同时修改srcDir路径（这个配置在文章开头推荐文章中已经有很详细的记录了）。</li>
+<li>一点一点pages文件中，进行适配。</li>
+</ol>
+<p>未完待续。</p>
+
+          
+            <div class='article_footer'>
+              
+                
   
     
     
 
-<section class="widget blogger shadow desktop mobile">
+
+
+  
+
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
   <div class='content'>
     
-      
-        <a class='avatar flat-box' href='/about/'>
-          <img no-lazy src='https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/avatar.jpg'/>
-        </a>
-      
-    
-    
-      <div class='text'>
+      <blockquote>
         
-          <h2>JantoK</h2>
-        
-        
-          <p>no time to complain.</p>
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
 
-        
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="mailto:jantok@foxmail.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
           
         
           
-            <a href="https://github.com/jantok"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
+            <p>本文永久链接是：<a href=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/>http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/</a></p>
           
         
-          
-            <a href="https://y.qq.com/n/yqq/song/000DFUa91A2SzX.html"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-      </div>
+      </blockquote>
     
   </div>
 </section>
@@ -451,55 +439,188 @@
   
 
   
+
+
+              
+            </div>
+          
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-06T19:48:04+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2020年7月6日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/nuxt/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>nuxt</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/vue/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>vue</p></a></div>
+
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
+公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到nuxt框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不再做论述。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
     
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
+公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到nuxt框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不再做论述。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
+公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到nuxt框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不再做论述。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+          <div class="prev-next">
+            
+            
+              <a class='next' href='/2020/07/05/Hexo%E7%BD%91%E7%AB%99%E6%B7%BB%E5%8A%A0%E4%B8%BB%E9%A2%98%E5%8F%8A%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/'>
+                <p class='title'>手把手教你Hexo网站添加主题及个性化配置<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>本篇会介绍如何使用Hexo主题，并且进行个性化配置。
+
+学习本篇前，你必须具备以下知识储备：
+
+已经安装且运行了Hexo。
+对前端知识有初步的基础认识。
+有自己查阅文档的能力。
+
+如果有以下知识...</p>
+              </a>
+            
+          </div>
+        
+      </section>
+    </article>
   
 
-  <section class="widget category shadow desktop">
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box reveal comments shadow">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+          </div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '如何将现有Vue项目迁移到Nuxt框架下',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+  
+
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/%E5%89%8D%E7%AB%AF/" href="/categories/%E5%89%8D%E7%AB%AF/"
-            id="categoriesE5898DE7ABAF"
-            ><div class='name'>前端</div><div class='badge'>(3)</div></a></li>
-        
-      </ul>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#你必须先知道的一些坑"><span class="toc-text">你必须先知道的一些坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是nuxt"><span class="toc-text">什么是nuxt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spa与ssr"><span class="toc-text">spa与ssr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#万物都是plugins"><span class="toc-text">万物都是plugins</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将vue-router迁移到nuxt的路由管理中"><span class="toc-text">将vue-router迁移到nuxt的路由管理中</span></a></li></ol>
     </div>
   </section>
 
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/nuxt/" style="font-size: 14px; color: #999">nuxt</a> <a href="/tags/vue/" style="font-size: 14px; color: #999">vue</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 24px; color: #555">博客</a>
-    </div>
-  </section>
-
-
-  
 
   
 
@@ -583,14 +704,6 @@
   }
   setInterval("createtime()",250);
 </script>
-
-
-
-
-	<!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
-	
-
-	
 
 
       <script>setLoadingBarProgress(60);</script>
@@ -708,6 +821,60 @@
 
 
 
+
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"></script>
+
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var meta = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick','mail','link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function(item){
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+  var valine = new Valine();
+  function emoji(path, idx, ext) {
+      return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  valine.init({
+    el: '#valine_container',
+    meta: meta,
+    
+    appId: "bS5ogUcYwM2TheWGJH4CKNWC-gzGzoHsz",
+    appKey: "sLNMoiSrYN740bVKYDYXEHO5",
+    placeholder: "thanks for your advices.",
+    pageSize:'10',
+    avatar:'robohash',
+    lang:'zh-cn',
+    visitor: 'true',
+    highlight: 'true',
+    mathJax: 'false',
+    enableQQ: 'true',
+    requiredFields: requiredFields,
+    emojiCDN: 'https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/emoji/valine/',
+    emojiMaps: emojiMaps
+  })
+  </script>
 
 
 
