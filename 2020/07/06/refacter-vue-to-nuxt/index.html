@@ -284,7 +284,7 @@
         
           
   <h1 class="title">
-    <a href="/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/">
+    <a href="/2020/07/06/refacter-vue-to-nuxt/">
       如何将现有Vue项目迁移到Nuxt框架下
     </a>
   </h1>
@@ -370,7 +370,8 @@
 </ul>
 <hr>
 <h2 id="你必须先知道的一些坑"><a href="#你必须先知道的一些坑" class="headerlink" title="你必须先知道的一些坑"></a>你必须先知道的一些坑</h2><p>在迁移的时候，有遇到一些大坑，翻阅文档，结合stackoverflow才摸透。因为国内环境中使用nuxt的人并不多，生态还不是很完善，所以踩到一些坑的时候并不是能很快排查解决。</p>
-<p>这里先提出几个你必须要知道的几个坑，后面的文章里也是默认你已经熟知这几点。（<strong>其实我感觉整篇文章最精华的就是这里了</strong>）</p>
+<p>这里先提出几个你必须要知道的几个坑，后面的文章里也是默认你已经熟知这几点。</p>
+<p>（<strong>其实我感觉整篇文章最精华的就是这里了</strong>）</p>
 <h3 id="什么是nuxt"><a href="#什么是nuxt" class="headerlink" title="什么是nuxt"></a>什么是nuxt</h3><p>对于nuxt，官方是这么介绍的：</p>
 <blockquote>
 <p>Nuxt.js 是一个基于 Vue.js 的<strong>通用应用框架</strong>。</p>
@@ -385,13 +386,80 @@
 <p>在迁移的过程中你会遇到非常非常多次这个问题，而解决办法就是如此的简单，仅需一行代码。</p>
 <h3 id="万物都是plugins"><a href="#万物都是plugins" class="headerlink" title="万物都是plugins"></a>万物都是plugins</h3><p>在nuxt下，许许多多的组件以及配置，都是通过plugins的形式完成配置。这里也会涉及到axios、localstorage等的封装。</p>
 <p>而在plugins进行引入的时候，也要注意下是否开启ssr。</p>
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p>因为axios在nuxt中进行封装的时候使用了箭头函数，在对接过程中偶然发现了在watcher函数中是不允许使用箭头函数的。于是对于想在watcher请求中发起请求需要换一种写法，vue官方文档中是这么说的：</p>
+<p><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-08-01.png" alt="vue文档"></p>
+<hr>
 <h2 id="将vue-router迁移到nuxt的路由管理中"><a href="#将vue-router迁移到nuxt的路由管理中" class="headerlink" title="将vue-router迁移到nuxt的路由管理中"></a>将vue-router迁移到nuxt的路由管理中</h2><p>在nuxt与vue中，有一个最为明显的区别就是nuxt采用的是根据pages页面的路径自动生成所对应的路由。所以在项目的迁移中，这里也是花费时间最多的模块。</p>
 <p>迁移方案有两种：</p>
 <ol>
 <li>沿用旧的vue-router结构，使用官方提供的的<a href="https://github.com/nuxt-community/router-module" target="_blank" rel="noopener">@nuxtjs/router</a>插件，以读取沿用旧的router.js文件配置。同时修改srcDir路径（这个配置在文章开头推荐文章中已经有很详细的记录了）。</li>
-<li>一点一点pages文件中，进行适配。</li>
+<li>一点一点迁移到pages文件夹中，进行适配。</li>
 </ol>
-<p>未完待续。</p>
+<h3 id="nuxtjs-router"><a href="#nuxtjs-router" class="headerlink" title="nuxtjs/router"></a>nuxtjs/router</h3><p>先来大致说一下第一种思路，即使用nuxt官方插件的形式。</p>
+<p>首先要理解下nuxt的页面渲染过程，官方文档中是这么说的：</p>
+<blockquote>
+<p>Nuxt在做渲染的时候包裹了很多层。首先有一个Document作为其模板，然后再去寻找其布局的页面，找到对应的页面之后，再根据引用去找到相关的组件进行渲染，数据请求与数据挂载，一系列完成之后，把剩余的路由信息返还给客户端，渲染完成，这个就是Nuxt简单的渲染流程。</p>
+</blockquote>
+<p>首先最开始的进行安装<a href="https://github.com/nuxt-community/router-module" target="_blank" rel="noopener">@nuxtjs/router</a>插件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @nuxtjs/router</span><br></pre></td></tr></table></figure>
+
+<p>然后在nuxt.config.js下写入modules。需要注意，写入buildModules的话只会生效于dev环境下。若是直接将vue项目的src目录移动过来的话，还需要在配置文件中配置srcDir以更改路径。之后@别名或是默认目录下将会从src目录开始。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  srcDir: <span class="string">'src/'</span>,</span><br><span class="line">  modules: [</span><br><span class="line">    <span class="comment">// Simple usage</span></span><br><span class="line">    <span class="string">'@nuxtjs/router'</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// With options</span></span><br><span class="line">    [<span class="string">'@nuxtjs/router'</span>, &#123; <span class="comment">/* module options */</span> &#125;]</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中options中可以配置path（默认为srcDir），fileName(默认为router.js)，以及keepDefaultRouter（保持启用普通nuxt路由的选项）。</p>
+<p>而router.js相对于原vue中的router，需要进行一些改写。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mport Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Router <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> MyPage <span class="keyword">from</span> <span class="string">'~/components/my-page'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Router)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createRouter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">    mode: <span class="string">'history'</span>,</span><br><span class="line">    routes: [</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/'</span>,</span><br><span class="line">        component: MyPage</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时需要注意，若是以下异步调用的写法:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">component: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'@/views/systemIntroduction/SystemIntroduction.vue'</span>),</span><br></pre></td></tr></table></figure>
+
+<p>会报以下错误：</p>
+<blockquote>
+<p>render function or template not defined in component: anonymous</p>
+</blockquote>
+<p>需要将其改为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ForgetPwd <span class="keyword">from</span> <span class="string">"./views/user/ForgetPwd"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>同时完成其他的一些适配。</p>
+<p>在页面并不是太多的情况下，我推荐第二种。一是长痛不如短痛，二是涉及到router-name不适配的为题，三是也可以趁机优化下页面代码。而对于迁移到pages下的方法，不再做过多论述，参考官方文档进行迁移即可。</p>
+<hr>
+<h2 id="axios的封装"><a href="#axios的封装" class="headerlink" title="axios的封装"></a>axios的封装</h2><p>对于发起请求，nuxt官方是有封装了自己的组件的。而在我vue的原项目中，也是有的具体的封装方法。最后选择了<a href="https://www.cnblogs.com/baikouLoser/p/10478492.html" target="_blank" rel="noopener">这种封装方法</a>，跟原项目较为接近。</p>
+<p>还有另一种较为正式的写法，将axios封装为pluhins的形式。</p>
+<p>首先安装@nuxtjs/axios，然后在plugins中这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> axios = app.$axios</span><br><span class="line">  <span class="keyword">const</span> store = app.store</span><br><span class="line">  <span class="keyword">const</span> router = app.route</span><br><span class="line">  <span class="keyword">let</span> errTime = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> noLogin = <span class="literal">false</span></span><br><span class="line">   axios.defaults.timeout = <span class="number">40000</span></span><br><span class="line">  </span><br><span class="line">  axios.interceptors.request.use</span><br><span class="line">  (</span><br><span class="line">    config =&gt; &#123;...&#125;，</span><br><span class="line">    error =&gt; &#123;...&#125;</span><br><span class="line">  )</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+
+<p>然后在nuxt.config.js中进行plugins设置，并将该组件的ssr设置为false。</p>
+<p>于是你就可以在使用的axios请求就已经被进行封装过，具体使用方法为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$axios.post(<span class="string">'url'</span>,params).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="nuxt-config-js中具体适配（build）"><a href="#nuxt-config-js中具体适配（build）" class="headerlink" title="nuxt.config.js中具体适配（build）"></a>nuxt.config.js中具体适配（build）</h2><p>nuxt是集合了 <a href="https://github.com/webpack/webpack" target="_blank" rel="noopener">Webpack</a> 和 <a href="https://github.com/vuejs/vue-loader" target="_blank" rel="noopener">vue-loader</a> 、 <a href="https://github.com/babel/babel-loader" target="_blank" rel="noopener">babel-loader</a> 来进行打包处理的。所以一些在vue中对于webpack的配置需要更换一下写法。</p>
+<p>以我项目中为例，参考其中的注释：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">build: &#123;</span><br><span class="line">    transpile: [ <span class="regexp">/vant.*?less/</span> ],</span><br><span class="line">    <span class="comment">// css 独立打包 link 的形式加载</span></span><br><span class="line">    cssSourceMap: <span class="literal">false</span>, <span class="comment">// false-生产模式，</span></span><br><span class="line">    loaders: &#123;</span><br><span class="line">      <span class="comment">// 对应vue中的loaderOptions</span></span><br><span class="line">    &#125;,</span><br><span class="line">    less: &#123;</span><br><span class="line">      modifyVars: &#123;</span><br><span class="line">        green: <span class="string">'#7966FE'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="comment">// webpack4 使用的压缩插件，用来替代webpack3的 UglifyJsPlugin</span></span><br><span class="line">      <span class="keyword">new</span> TerserPlugin(&#123;</span><br><span class="line">        terserOptions: &#123;</span><br><span class="line">          warnings: <span class="literal">false</span>,</span><br><span class="line">          compress: &#123;</span><br><span class="line">            drop_console: <span class="literal">true</span>, <span class="comment">// 可选：false,生产移除 console.log</span></span><br><span class="line">            pure_funcs: [<span class="string">'console.log'</span>]</span><br><span class="line">          &#125;,</span><br><span class="line">          output: &#123;</span><br><span class="line">            comments: <span class="literal">false</span> <span class="comment">// 是否保留代码注释</span></span><br><span class="line">          &#125;,</span><br><span class="line">          cache: <span class="literal">true</span>,</span><br><span class="line">          parallel: <span class="literal">true</span>,</span><br><span class="line">          <span class="comment">// Must be set to true if using source-maps in production</span></span><br><span class="line">          sourceMap: process.env.NODE_ENV !== <span class="string">'production'</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// 下面这种写法是重点，如何在build中配置plugins</span></span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">// 以CompressionPlugin为例子：</span></span><br><span class="line">      <span class="keyword">new</span> CompressionPlugin(&#123;</span><br><span class="line">        <span class="comment">//  CompressionPlugin 代码压缩工具</span></span><br><span class="line">        filename: <span class="string">'[path].gz[query]'</span>, <span class="comment">//目标资源名称。[file] 会被替换成原资源。[path] 会被替换成原资源路径，[query] 替换成原查询字符串 原asset关键字已被改为filename</span></span><br><span class="line">        algorithm: <span class="string">'gzip'</span>, <span class="comment">//算法</span></span><br><span class="line">        test: <span class="keyword">new</span> <span class="built_in">RegExp</span>(</span><br><span class="line">          <span class="string">'\\.(js|css|svg)$'</span> <span class="comment">//压缩 js 与 css</span></span><br><span class="line">        ),</span><br><span class="line">        threshold: <span class="number">10240</span>, <span class="comment">//只处理比这个值大的资源。按字节计算</span></span><br><span class="line">        minRatio: <span class="number">0.8</span>, <span class="comment">//只有压缩率比这个值小的资源才会被处理</span></span><br><span class="line">        cache: <span class="literal">true</span></span><br><span class="line">      &#125;)</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     ** You can extend webpack config here</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    extend(config, ctx) &#123;</span><br><span class="line">      <span class="comment">// Run ESLint on save</span></span><br><span class="line">      <span class="keyword">if</span> (ctx.dev &amp;&amp; ctx.isClient) &#123;</span><br><span class="line">        config.module.rules.push(&#123;</span><br><span class="line">          enforce: <span class="string">'pre'</span>,</span><br><span class="line">          test: <span class="regexp">/\.(js|vue)$/</span>,</span><br><span class="line">          loader: <span class="string">'eslint-loader'</span>,</span><br><span class="line">          exclude: <span class="regexp">/(node_modules)/</span></span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 对应chainWebpack 对webpack进行深层样式修改</span></span><br><span class="line">      <span class="keyword">const</span> svgRule = config.module.rules.find(<span class="function"><span class="params">rule</span> =&gt;</span> rule.test.test(<span class="string">'.svg'</span>))</span><br><span class="line">      svgRule.exclude = [resolve(<span class="string">'assets/icons/svg'</span>)]</span><br><span class="line">      <span class="comment">// Includes /assets/svg for svg-sprite-loader</span></span><br><span class="line">      config.module.rules.push(&#123;</span><br><span class="line">        test: <span class="regexp">/\.svg$/</span>,</span><br><span class="line">        include: [resolve(<span class="string">'assets/icons/svg'</span>)],</span><br><span class="line">        loader: <span class="string">'svg-sprite-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">          symbolId: <span class="string">'icon-[name]'</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">// user svgo-loader</span></span><br><span class="line">      config.module.rules.push(&#123;</span><br><span class="line">        test: <span class="regexp">/\.svg$/</span>,</span><br><span class="line">        include: [resolve(<span class="string">'assets/icons/svg'</span>)],</span><br><span class="line">        loader: <span class="string">'svgo-loader'</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里不做过多论述，只是参考webpack等build中代码书写格式，进行配置即可。</p>
+<hr>
+<h2 id="全局型plugins在nuxt中的引入"><a href="#全局型plugins在nuxt中的引入" class="headerlink" title="全局型plugins在nuxt中的引入"></a>全局型plugins在nuxt中的引入</h2><p>起因是这样的，业务需求我需要把我在vue中使用的一个全局插件迁移到nuxt中。</p>
+<p>在原项目中，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> nativeShare = <span class="keyword">new</span> nativeShare()</span><br><span class="line"><span class="keyword">const</span> nativeShare = <span class="keyword">new</span> NativeShare(&#123;</span><br><span class="line">  <span class="comment">// 让你修改的分享的文案同步到标签里，比如title文案会同步到&lt;title&gt;标签中</span></span><br><span class="line">  <span class="comment">// 这样可以让一些不支持分享的浏览器也能修改部分文案，默认都不会同步</span></span><br><span class="line">  syncDescToTag: <span class="literal">false</span>,</span><br><span class="line">  syncIconToTag: <span class="literal">false</span>,</span><br><span class="line">  syncTitleToTag: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>很显然迁移过去nuxt之后会报undefined nativeShare的问题。</p>
+<p>解决办法是将nativeShare注册成一个可以全局使用的plugins。</p>
+<p>一顿骚操作后，发生了<a href="https://github.com/fa-ge/NativeShare/issues/59" target="_blank" rel="noopener">这个问题</a>。在github查看其他人的代码写法后，发现了一个可以引用生效的写法，plugins的具体代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> NativeShare <span class="keyword">from</span> <span class="string">'nativeshare'</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">Vue.prototype.$nativeShare = <span class="keyword">new</span> NativeShare()</span><br></pre></td></tr></table></figure>
+
+<p>并且这样使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$nativeShare.setConfig(&#123;</span><br><span class="line">  <span class="comment">// 让你修改的分享的文案同步到标签里，比如title文案会同步到&lt;title&gt;标签中</span></span><br><span class="line">  <span class="comment">// 这样可以让一些不支持分享的浏览器也能修改部分文案，默认都不会同步</span></span><br><span class="line">  syncDescToTag: <span class="literal">false</span>,</span><br><span class="line">  syncIconToTag: <span class="literal">false</span>,</span><br><span class="line">  syncTitleToTag: <span class="literal">false</span>,</span><br><span class="line">  wechatConfig: &#123;</span><br><span class="line">    appId: <span class="string">''</span>,</span><br><span class="line">    timestamp: <span class="string">''</span>,</span><br><span class="line">    nonceStr: <span class="string">''</span>,</span><br><span class="line">    signature: <span class="string">''</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="其他大小坑"><a href="#其他大小坑" class="headerlink" title="其他大小坑"></a>其他大小坑</h2><p>这一部分我也觉得算是文章的意义hhh，筛选了一些当时做迁移的时候所遇到的大小坑，如果你也遇到了，希望可以帮到你。</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_41841298/article/details/87795810" target="_blank" rel="noopener">beforeEach路由守卫nuxt注册</a></li>
+<li><a href="https://www.jianshu.com/p/cd5487c1980b" target="_blank" rel="noopener">svg使用</a></li>
+<li><a href="https://blog.csdn.net/qq_43258252/article/details/88647642" target="_blank" rel="noopener">flexible-2rem使用与适配</a></li>
+<li><a href="https://nuxtjs.org/guide/views#app-template" target="_blank" rel="noopener">如何在nuxt中使用app.html</a></li>
+</ul>
+<p>如果有遇到任何问题，或者是文章中有任何纰漏，欢迎联系我，推荐使用邮箱。万分感谢。</p>
 
           
             <div class='article_footer'>
@@ -428,7 +496,7 @@
           
         
           
-            <p>本文永久链接是：<a href=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/>http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/</a></p>
+            <p>本文永久链接是：<a href=http://129.211.78.206/2020/07/06/refacter-vue-to-nuxt/>http://129.211.78.206/2020/07/06/refacter-vue-to-nuxt/</a></p>
           
         
       </blockquote>
@@ -453,10 +521,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-06T19:48:04+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-08T16:36:17+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2020年7月6日</p>
+    <p>更新于：2020年7月8日</p>
   </a>
 </div>
 
@@ -483,7 +551,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://129.211.78.206/2020/07/06/refacter-vue-to-nuxt/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
 公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到nuxt框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不再做论述。"
           
           >
@@ -496,7 +564,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://129.211.78.206/2020/07/06/refacter-vue-to-nuxt/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
 公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到nuxt框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不再做论述。"
           
           >
@@ -509,7 +577,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://129.211.78.206/2020/07/06/%E5%A6%82%E4%BD%95%E5%B0%86%E7%8E%B0%E6%9C%89Vue%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E5%88%B0Nuxt%E6%A1%86%E6%9E%B6%E4%B8%8B/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
+          href="http://service.weibo.com/share/share.php?url=http://129.211.78.206/2020/07/06/refacter-vue-to-nuxt/&title=如何将现有Vue项目迁移到Nuxt框架下 - JantoK's blog&summary=本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
 公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目，迁移到nuxt框架下。本篇重点写的是是在当时做迁移的时候记录的一些坑，而具体的一些步骤其实网上都有很详细的描述，我就不再做论述。"
           
           >
@@ -535,7 +603,7 @@
           <div class="prev-next">
             
             
-              <a class='next' href='/2020/07/05/Hexo%E7%BD%91%E7%AB%99%E6%B7%BB%E5%8A%A0%E4%B8%BB%E9%A2%98%E5%8F%8A%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/'>
+              <a class='next' href='/2020/07/05/Hexo-themes-set/'>
                 <p class='title'>手把手教你Hexo网站添加主题及个性化配置<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
                 <p class='content'>本篇会介绍如何使用Hexo主题，并且进行个性化配置。
 
@@ -617,7 +685,7 @@
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#你必须先知道的一些坑"><span class="toc-text">你必须先知道的一些坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是nuxt"><span class="toc-text">什么是nuxt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spa与ssr"><span class="toc-text">spa与ssr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#万物都是plugins"><span class="toc-text">万物都是plugins</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将vue-router迁移到nuxt的路由管理中"><span class="toc-text">将vue-router迁移到nuxt的路由管理中</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#你必须先知道的一些坑"><span class="toc-text">你必须先知道的一些坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是nuxt"><span class="toc-text">什么是nuxt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spa与ssr"><span class="toc-text">spa与ssr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#万物都是plugins"><span class="toc-text">万物都是plugins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#箭头函数"><span class="toc-text">箭头函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将vue-router迁移到nuxt的路由管理中"><span class="toc-text">将vue-router迁移到nuxt的路由管理中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nuxtjs-router"><span class="toc-text">nuxtjs&#x2F;router</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#axios的封装"><span class="toc-text">axios的封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nuxt-config-js中具体适配（build）"><span class="toc-text">nuxt.config.js中具体适配（build）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局型plugins在nuxt中的引入"><span class="toc-text">全局型plugins在nuxt中的引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他大小坑"><span class="toc-text">其他大小坑</span></a></li></ol>
     </div>
   </section>
 
