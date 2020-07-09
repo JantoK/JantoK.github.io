@@ -283,7 +283,7 @@
         
           
   <h1 class="title">
-    <a href="/2020/07/05/Hexo-themes-set/">
+    <a href="/posts/3446081106/">
       手把手教你Hexo网站添加主题及个性化配置
     </a>
   </h1>
@@ -309,9 +309,9 @@
               
   
   <div class='new-meta-item category'>
-    <a href='/categories/%E5%89%8D%E7%AB%AF/' rel="nofollow">
+    <a href='/categories/uncategorized/' rel="nofollow">
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <p>前端</p>
+      <p>uncategorized</p>
     </a>
   </div>
 
@@ -359,7 +359,7 @@
 <li>能编写css样式。</li>
 </ul>
 <h2 id="怎么使用Hexo主题"><a href="#怎么使用Hexo主题" class="headerlink" title="怎么使用Hexo主题"></a>怎么使用Hexo主题</h2><p>  在 <a href="http://129.211.78.206/2020/07/04/Hexo%E7%BD%91%E7%AB%99%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE/">上篇教程</a> 中我们的Hexo博客已经可以跑起来了。但是默认的主题实在是很丑一点都不狂拽酷炫。<br>  而我们搭建一个属于自己的狂拽酷炫的博客的博客的第一步，就是先在<a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo官网</a>上挑选一个最接近适合我们博客的主题。<br>  挑选到自己喜欢的主题后，接下来就是<strong>考验你眼力</strong>的适合了。因为我们要在展示的示例网站中，找到这个主题的项目名字、或者是地址。<br>  作者放出来的该主题的示例网站，他可能是一个作者正在使用的个人站、也有可能是一个展示站（即样式展示而已）。也有可能是很规范的示例网站（即包含示例、教程、文档，同时单独挂载出来）。<br>  这里我们以本站所使用的<a href="https://volantis.js.org/" target="_blank" rel="noopener">volantis主题</a>为例子。进去之后就是非常完整的主题默认样式展示，同时是有版本更新内容以及文档教程等。</p>
-<p>  我们在主题网站的教程页面里，找到了如下安装命令：<br>  <img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-02.png" alt="安装命令"><br>  我们一步一步来解释以下这几步命令的含义，同时对于其他主题的安装也是大同小异，举一反三即可。<br></p>
+<p>  我们在主题网站的教程页面里，找到了如下安装命令：<br>  <img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-02.png" alt="安装命令"><br>  我们一步一步来解释以下这几步命令的含义，同时对于其他主题的安装也是大同小异，举一反三即可。<br></p>
 <ol>
 <li><p>Hexo中所有的主题都是下载到themes文件夹下进行统一管理。</p>
 </li>
@@ -368,10 +368,10 @@
 <li><p>而其他地址也一样，你所需要做的就是找到你想要的主题的地址，然后clone到themes下。</p>
 </li>
 <li><p>博客根目录下的_config.yml是整个博客项目的配置文件，而更改主题也是在其中进行更改。</p>
-<p>完成之后，别忘了我们的hexo三部曲：<strong>hexo clean，generate，service</strong>。<br><br>然后你就会看到，你的网站变成了这个样子：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-03.png" alt="valantis主题下页面"><br>接下来就是进行一些基础的讲解与配置。</p>
+<p>完成之后，别忘了我们的hexo三部曲：<strong>hexo clean，generate，service</strong>。<br><br>然后你就会看到，你的网站变成了这个样子：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-03.png" alt="valantis主题下页面"><br>接下来就是进行一些基础的讲解与配置。</p>
 </li>
 </ol>
-<h2 id="如何适配主题"><a href="#如何适配主题" class="headerlink" title="如何适配主题"></a>如何适配主题</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>  安装上面的步骤配置完，你的目录结构应该是下面这个样子：<br><br>  <img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-04.png" alt="目录结构"><br>  上面提到_config.yml文件为我们的配置文件。这里出现了两个yml文件，一个在根目录下，一个在主题的根目录下。<br>  项目根目录下的yml为全局配置文件，而主题下的为主题配置文件。优先级上前者大于后者。<br>  一般对于样式的个性化，都可以主题配置文件中完成。<br></p>
+<h2 id="如何适配主题"><a href="#如何适配主题" class="headerlink" title="如何适配主题"></a>如何适配主题</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>  安装上面的步骤配置完，你的目录结构应该是下面这个样子：<br><br>  <img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-04.png" alt="目录结构"><br>  上面提到_config.yml文件为我们的配置文件。这里出现了两个yml文件，一个在根目录下，一个在主题的根目录下。<br>  项目根目录下的yml为全局配置文件，而主题下的为主题配置文件。优先级上前者大于后者。<br>  一般对于样式的个性化，都可以主题配置文件中完成。<br></p>
 <h3 id="主题目录结构"><a href="#主题目录结构" class="headerlink" title="主题目录结构"></a>主题目录结构</h3><p>  对于hexo的目录结构，上篇我们已经大致分析完了。我们现在来分析以下theme下主题的目录结构，而个性化你的主题样式，基本都是在这里进行实现。<br>  不同的主题间目录结构大体是相同的，了解后举一反三即可。<br></p>
 <ul>
 <li><p>.github文件夹是git仓库相关的文件夹，忽略。</p>
@@ -396,7 +396,7 @@
 </li>
 </ul>
 <h3 id="主题个性化"><a href="#主题个性化" class="headerlink" title="主题个性化"></a>主题个性化</h3><p>  终于进入了正题。本篇指在讲解一些最基础的适配，其他的依旧举一反三即可。<br></p>
-<h4 id="yml配置文件的修改"><a href="#yml配置文件的修改" class="headerlink" title="yml配置文件的修改"></a>yml配置文件的修改</h4><p>  我们以最基础的为例子先。在进入安装完主题进去项目的时候，应该会发现，很多的导航链接打不开，或者是跳转到了题主的链接上。<br>  于是我们的第一件事，就是把其中的一些必须修改的配置修改了。<br>  <br><br>  打开主题的yml文件，我们会看到如下代码：<br>  <img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-05.png" alt="代码"><br>  yml文件有非常明确的层级结构。所以里面的代码前面的空格的多少都代表着层级关系。<br>  如这里就是style（样式）下的一些配置，<br>  其中包括导航栏样式配置navbar、字体对齐方式text_align等。<br>  参照着<a href="https://volantis.js.org/v2/theme-settings/index.html?_sw-precache=915d53d0469df821097c0b3976c84c2d" target="_blank" rel="noopener">官网教程</a>来进行修改。<br></p>
+<h4 id="yml配置文件的修改"><a href="#yml配置文件的修改" class="headerlink" title="yml配置文件的修改"></a>yml配置文件的修改</h4><p>  我们以最基础的为例子先。在进入安装完主题进去项目的时候，应该会发现，很多的导航链接打不开，或者是跳转到了题主的链接上。<br>  于是我们的第一件事，就是把其中的一些必须修改的配置修改了。<br>  <br><br>  打开主题的yml文件，我们会看到如下代码：<br>  <img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-05.png" alt="代码"><br>  yml文件有非常明确的层级结构。所以里面的代码前面的空格的多少都代表着层级关系。<br>  如这里就是style（样式）下的一些配置，<br>  其中包括导航栏样式配置navbar、字体对齐方式text_align等。<br>  参照着<a href="https://volantis.js.org/v2/theme-settings/index.html?_sw-precache=915d53d0469df821097c0b3976c84c2d" target="_blank" rel="noopener">官网教程</a>来进行修改。<br></p>
 <h4 id="进阶修改"><a href="#进阶修改" class="headerlink" title="进阶修改"></a>进阶修改</h4><p>  <strong>这一部分需要你有一定的前端代码基础。</strong></p>
 <p>  大部分修改都是可以在yml中进行修改的，小部分个性化的样式，需要更改源码实现。<br>  比方说最开始的时候我想给首页的字体添加一个荧光环绕的shadow-box的效果，就只能从源码动手<br>  但是如果可以的话，最好不要修改源码，或者是从自己的仓库clone下来，<br>  这么做的好处除了防止根源性污染源码，同时也可以把自己的对于主题的魔改进行保存提交。<br>  <br><br>  而对于源码的修改，分为三种：</p>
 <ol>
@@ -405,10 +405,10 @@
 <li><p>样式性的修改。</p>
 </li>
 <li><p>全局添加式的修改。</p>
-<p>对于结构性的修改，都在layout文件夹里面。<br>我们以修改封面为例子，比方说我们不想要首页的这个搜索栏，正确的做法我们应该是查看yml文件是否有的配置有修改，本文只是简单展示个例子。<br>我们找到了_cover文件夹下，找到index.ejs。看到代码如下：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-06.png" alt="代码"><br>而根据代码，圈中的部分就是封面中搜索栏的所在的结点，把它去除、然后hexo clean,hexo g,hexo s三部曲，<br>你就会看到你的封面上已经去除掉搜索栏了。<br>其他的结构修改跟这里也是大同小异，你只需要找到结构所对应的ejs文件，添加新结点，删除结点，或者是更改结构顺序的等。</p>
+<p>对于结构性的修改，都在layout文件夹里面。<br>我们以修改封面为例子，比方说我们不想要首页的这个搜索栏，正确的做法我们应该是查看yml文件是否有的配置有修改，本文只是简单展示个例子。<br>我们找到了_cover文件夹下，找到index.ejs。看到代码如下：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-06.png" alt="代码"><br>而根据代码，圈中的部分就是封面中搜索栏的所在的结点，把它去除、然后hexo clean,hexo g,hexo s三部曲，<br>你就会看到你的封面上已经去除掉搜索栏了。<br>其他的结构修改跟这里也是大同小异，你只需要找到结构所对应的ejs文件，添加新结点，删除结点，或者是更改结构顺序的等。</p>
 <br>
 
-<p>对于样式性css修改，又或者是js等修改，都在source文件夹下。<br>这里还是以封面为例子，我们找到了/source/css/_layout/cover.styl<br>代码如下：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-07.png" alt="代码"><br>圈住的部分，我把它原来的字体颜色，改成了红色。刷新你的页面之后，你就会看他已经生效了：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-08.png" alt="代码生效"><br>这里有些人可能会有点疑问，为什么这里不需要clean，g，s三部曲了呢？<br>因为hexo所生成的是一个<a href="">静态页面</a>,他根据你的结构所生成对应的html文件，而样式等在代码里是分离开的。<br>也就是说，如果你的改动是涉及到结点、结构、以及由hexo所生成的文件的改变，你需要重新三部曲一下。<br>如果你的改动是涉及到样式、js等之类的修改，你只需要刷新下即可。<br>但不管如何，如果你遇到了各种不生效的问题，三部曲一下，总是没错的。</p>
+<p>对于样式性css修改，又或者是js等修改，都在source文件夹下。<br>这里还是以封面为例子，我们找到了/source/css/_layout/cover.styl<br>代码如下：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-07.png" alt="代码"><br>圈住的部分，我把它原来的字体颜色，改成了红色。刷新你的页面之后，你就会看他已经生效了：<br><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-05-08.png" alt="代码生效"><br>这里有些人可能会有点疑问，为什么这里不需要clean，g，s三部曲了呢？<br>因为hexo所生成的是一个<a href="">静态页面</a>,他根据你的结构所生成对应的html文件，而样式等在代码里是分离开的。<br>也就是说，如果你的改动是涉及到结点、结构、以及由hexo所生成的文件的改变，你需要重新三部曲一下。<br>如果你的改动是涉及到样式、js等之类的修改，你只需要刷新下即可。<br>但不管如何，如果你遇到了各种不生效的问题，三部曲一下，总是没错的。</p>
 <br>
 
 </li>
@@ -451,7 +451,7 @@
           
         
           
-            <p>本文永久链接是：<a href=http://129.211.78.206/2020/07/05/Hexo-themes-set/>http://129.211.78.206/2020/07/05/Hexo-themes-set/</a></p>
+            <p>本文永久链接是：<a href=http://129.211.78.206/posts/3446081106/>http://129.211.78.206/posts/3446081106/</a></p>
           
         
       </blockquote>
@@ -476,10 +476,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-08T16:35:05+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-09T10:54:57+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2020年7月8日</p>
+    <p>更新于：2020年7月9日</p>
   </a>
 </div>
 
@@ -506,7 +506,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://129.211.78.206/2020/07/05/Hexo-themes-set/&title=手把手教你Hexo网站添加主题及个性化配置 - JantoK's blog&summary=本篇会介绍如何使用Hexo主题，并且进行个性化配置。"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://129.211.78.206/posts/3446081106/&title=手把手教你Hexo网站添加主题及个性化配置 - JantoK's blog&summary=本篇会介绍如何使用Hexo主题，并且进行个性化配置。"
           
           >
           
@@ -518,7 +518,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://129.211.78.206/2020/07/05/Hexo-themes-set/&title=手把手教你Hexo网站添加主题及个性化配置 - JantoK's blog&summary=本篇会介绍如何使用Hexo主题，并且进行个性化配置。"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://129.211.78.206/posts/3446081106/&title=手把手教你Hexo网站添加主题及个性化配置 - JantoK's blog&summary=本篇会介绍如何使用Hexo主题，并且进行个性化配置。"
           
           >
           
@@ -530,7 +530,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://129.211.78.206/2020/07/05/Hexo-themes-set/&title=手把手教你Hexo网站添加主题及个性化配置 - JantoK's blog&summary=本篇会介绍如何使用Hexo主题，并且进行个性化配置。"
+          href="http://service.weibo.com/share/share.php?url=http://129.211.78.206/posts/3446081106/&title=手把手教你Hexo网站添加主题及个性化配置 - JantoK's blog&summary=本篇会介绍如何使用Hexo主题，并且进行个性化配置。"
           
           >
           
@@ -554,14 +554,14 @@
         
           <div class="prev-next">
             
-              <a class='prev' href='/2020/07/06/refacter-vue-to-nuxt/'>
+              <a class='prev' href='/posts/1225161970/'>
                 <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>如何将现有Vue项目迁移到Nuxt框架下</p>
                 <p class='content'>本篇会介绍如何将现有Vue项目，迁移到Nuxt框架下。
 公司前阵子为了给现有项目做seo，同时对缓存以及pwa、添加一些服务端功能等功能需求进行一定的优化和管理，于是决定将一个现有的纯vue项目...</p>
               </a>
             
             
-              <a class='next' href='/2020/07/04/Hexo-main-set/'>
+              <a class='next' href='/posts/1759756337/'>
                 <p class='title'>Hexo网站博客搭建与基础配置<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
                 <p class='content'>本篇会介绍如何使用Hexo框架快速搭建一个博客网站。
 
@@ -1034,7 +1034,12 @@
 
 
   <script>setLoadingBarProgress(100);</script>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"left","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"left","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script><script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
 <script type="text/javascript" src="/js/fireworks.js"></script>
