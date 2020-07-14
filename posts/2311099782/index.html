@@ -406,6 +406,17 @@
 <p><strong>而props数据流向只能向下，不能向上，当上层刷新的时候，下层数据也会刷新</strong>。</p>
 <p>所以List到达最底层的item，item里的list数据更新后想向上传递（到collapse）被阻止，但item的展开收起（视图刷新）会对item下的props做一次刷新。</p>
 <hr>
+<h2 id="补充（翻车）"><a href="#补充（翻车）" class="headerlink" title="补充（翻车）"></a>补充（翻车）</h2><p>在测试中，按文档的写法是没有问题的。但之后问题就出现了。</p>
+<p>在本次项目中，B页面是嵌套入A页面中的（nuxt的nuxt-child）。于是乎在就会出现，B页面已经载入了，而B页面中data初始化获取List的时候，List并没有数据。</p>
+<p>在B载入完成后，需要A选择/变动后再流入B中，但是B并没有再次初始化获取值。</p>
+<p>所以最后还是绕回我原来的写法：</p>
+<ol>
+<li>通过localStorage进行中间存储List</li>
+<li>每一次A对List的改动后都存储进localStorage中</li>
+<li>并且每次改动，都通过ref调用B页面中的refresh方法去刷新getLocalStorage</li>
+<li>曲线救国</li>
+</ol>
+<hr>
 <p>参考文档：</p>
 <ul>
 <li><p><a href="https://www.zhihu.com/question/37548226" target="_blank" rel="noopener">深入理解solt</a></p>
@@ -474,7 +485,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-14T11:34:04+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-14T19:42:12+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2020年7月14日</p>
@@ -635,7 +646,7 @@
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#起因"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排查"><span class="toc-text">排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档"><span class="toc-text">文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#起因"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排查"><span class="toc-text">排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档"><span class="toc-text">文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充（翻车）"><span class="toc-text">补充（翻车）</span></a></li></ol>
     </div>
   </section>
 
