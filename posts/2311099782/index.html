@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta name="renderer" content="webkit">
@@ -18,8 +16,12 @@
 
   <!-- 页面元数据 -->
   
-    <title>分类：工作 - JantoK&#39;s blog</title>
+    <title>props动态绑定失效 - JantoK&#39;s blog</title>
   
+    <meta name="keywords" content="vue,element">
+  
+  
+    <meta name="description" content="本章会详细讲述在工作中踩到的一个关于vue-props的坑。在对级页面下，动态绑定props失效的问题以及解决办法。">
   
 
   <!-- feed -->
@@ -265,25 +267,12 @@
     <div class='body-wrapper'>
       
 
-
 <div class='l_main'>
   
-    
-      
-  <section class="post-list ">
-    
-      
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box shadow reveal ">
+
   
+    <article id="post" class="post white-box reveal shadow article-type-post" itemscope itemprop="blogPost">
+      
 
 
   <section class='meta'>
@@ -293,11 +282,11 @@
       <div class="meta" id="header-meta">
         
           
-  <h2 class="title">
-    <a href="/posts/2615483405/">
-      如何规范的提交commit message
+  <h1 class="title">
+    <a href="/posts/2311099782/">
+      props动态绑定失效
     </a>
-  </h2>
+  </h1>
 
 
         
@@ -320,9 +309,9 @@
               
   
   <div class='new-meta-item category'>
-    <a href='/categories/%E5%B7%A5%E4%BD%9C/' rel="nofollow">
+    <a href='/categories/%E5%89%8D%E7%AB%AF/' rel="nofollow">
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <p>工作</p>
+      <p>前端</p>
     </a>
   </div>
 
@@ -333,27 +322,9 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年7月9日</p>
+    <p>发布于：2020年7月14日</p>
   </a>
 </div>
-
-            
-          
-            
-              
-  <div class="new-meta-item wordcount">
-    <a class='notlink'>
-      <i class="fas fa-keyboard fa-fw" aria-hidden="true"></i>
-      <p>字数：911字</p>
-    </a>
-  </div>
-  <div class="new-meta-item readtime">
-    <a class='notlink'>
-      <i class="fas fa-hourglass-half fa-fw" aria-hidden="true"></i>
-      <p>时长：3分钟</p>
-    </a>
-  </div>
-
 
             
           
@@ -371,97 +342,117 @@
   </section>
 
 
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如何既不冗余繁琐，又规范地提交git的commit信息。</p>
-      
-    </div>
-    
-      
-        <div class="button readmore">
-          <a href="/posts/2615483405/">
-            阅读全文 <i class="fas fa-chevron-right"></i>
-          </a>
-        </div>
-      
-    
-  </section>
-</article>
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          
+          <p>本章会详细讲述在工作中踩到的一个关于vue-props的坑。在对级页面下，动态绑定props失效的问题以及解决办法。</p>
+<a id="more"></a>
 
-          </div>
-        
-      
-    
-  </section>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>事情的起因是这样的：需求里要求从A页面中选择并获取到对象列表参数List[object]，把List传给B页面中，在B页面中通过el-collapse将List展开，并且对每个List中的参数通过v-model进行赋值。如图所示：</p>
+<p><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-14.png" alt="最终效果图"></p>
+<p>自信满满地一顿骚操作后，发现在collapse-item中对于props值的操作<strong>并不生效</strong>。</p>
+<p>于是又哗啦啦地开启了一顿排查。</p>
+<hr>
+<h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>对于其中v-model绑定props更改并不生效的问题，</p>
+<p>同时出现了一些比较奇怪的现象。</p>
+<ul>
+<li><p>props的值可以<strong>正常传递</strong>到collspse中。</p>
+</li>
+<li><p>点击checkbox，<strong>边框会变红，但不会被勾中</strong>，之后“卡死”。</p>
+</li>
+<li><p>在对collspse-item的展开收起中，其实会刷新item里面的想要修改的值，<strong>但只会生效一个</strong>。</p>
+<p>即点击红棋子，然后收起再展开item -》红棋子生效。</p>
+<p>点击红棋子，再点击蓝棋子，然后收起再展开item -》只有蓝棋子生效。</p>
+<p>第二列中的input也是，输入123，然后收起展开item -》只有3生效。</p>
+</li>
+</ul>
+<p>根据这些现象，再继续排查，先排除掉了这些原因：</p>
+<ul>
+<li>将collspse组件去掉，发现仍然无法对list修改，<strong>排除collspse的问题</strong>。</li>
+<li>通过checkbox的change方法，发现赋值是生效的，但是只生效最新的一个，覆盖掉之前生效的。并且视图不会更新。</li>
+<li>将List数据复制到B页面当成本地数据去测试，发现没有问题。</li>
+</ul>
+<p>则<strong>确定了是props的问题</strong>。</p>
+<hr>
+<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p>由于之前踩过坑，知道无法直接对props值进行更改或者显示，</p>
+<p>所以上述数据中的List都是使用以下形式使用的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  localList() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.propsList</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查阅相关文档，最开始从<a href="https://cn.vuejs.org/v2/guide/components-props.html#ad" target="_blank" rel="noopener">官方vue文档</a>入手，发现一下子就找到了答案：</p>
+<blockquote>
+<p>所有的 prop 都使得其父子 prop 之间形成了一个<strong>单向下行绑定</strong>：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。</p>
+</blockquote>
+<p>而解决办法也非常清楚：</p>
+<ol>
+<li><p><strong>这个 prop 用来传递一个初始值；这个子组件接下来希望将其作为一个本地的 prop 数据来使用。</strong>在这种情况下，最好定义一个本地的 data property 并将这个 prop 用作其初始值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">props: [<span class="string">'initialCounter'</span>],</span><br><span class="line">data: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    counter: <span class="keyword">this</span>.initialCounter</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>这个 prop 以一种原始的值传入且需要进行转换。</strong>在这种情况下，最好使用这个 prop 的值来定义一个计算属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">props: [<span class="string">'size'</span>],</span><br><span class="line">computed: &#123;</span><br><span class="line">  normalizedSize: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.size.trim().toLowerCase()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<blockquote>
+<p>注意在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身<strong>将会</strong>影响到父组件的状态。</p>
+</blockquote>
+<p>原因是<strong>我试用了computed去做数据更改，而不是data</strong>。</p>
+<p>所以解决办法是赋值给一个本地data即可。</p>
+<hr>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>于是乎我很好奇，从最初的A页面开始，到底往下传递了多少层页面。</p>
+<p>查看<a href="https://github.com/JantoK/element/blob/dev/packages/collapse/src/collapse-item.vue" target="_blank" rel="noopener">el-collapse源码</a>，发现其大致结构如下：</p>
+<p>A页面获取List -》 List到页面B -》到collapse -》（通过solt）到collapse-item</p>
+<p>可以把组件理解成是一个子页面，组件内的solt又算是一个子页面。</p>
+<p><strong>而props数据流向只能向下，不能向上，当上层刷新的时候，下层数据也会刷新</strong>。</p>
+<p>所以List到达最底层的item，item里的list数据更新后想向上传递（到collapse）被阻止，但item的展开收起（视图刷新）会对item下的props做一次刷新。</p>
+<hr>
+<p>参考文档：</p>
+<ul>
+<li><p><a href="https://www.zhihu.com/question/37548226" target="_blank" rel="noopener">深入理解solt</a></p>
+</li>
+<li><p><a href="https://cn.vuejs.org/v2/guide/components-props.html#ad" target="_blank" rel="noopener">vue中关于props的描述</a></p>
+</li>
+</ul>
+
+          
+            <div class='article_footer'>
+              
+                
   
     
-    <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
     
-    
+
+
 
   
 
-
-    
-  
-
-</div>
-<aside class='l_side'>
-  
   
     
     
 
-<section class="widget blogger shadow desktop mobile">
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
   <div class='content'>
     
-      
-        <a class='avatar flat-box' href='/about/'>
-          <img no-lazy src='https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/avatar.jpg'/>
-        </a>
-      
-    
-    
-      <div class='text'>
+      <blockquote>
         
-          <h2>JantoK</h2>
-        
-        
-          <p>no time to complain.</p>
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
 
-        
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="mailto:jantok@foxmail.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
           
         
           
-            <a href="https://github.com/jantok"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
+            <p>本文永久链接是：<a href=http://129.211.78.206/posts/2311099782/>http://129.211.78.206/posts/2311099782/</a></p>
           
         
-          
-            <a href="https://y.qq.com/n/yqq/song/000DFUa91A2SzX.html"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-      </div>
+      </blockquote>
     
   </div>
 </section>
@@ -469,65 +460,185 @@
   
 
   
+
+
+              
+            </div>
+          
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-14T11:27:32+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2020年7月14日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/vue/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>vue</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/element/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>element</p></a></div>
+
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://129.211.78.206/posts/2311099782/&title=props动态绑定失效 - JantoK's blog&summary=本章会详细讲述在工作中踩到的一个关于vue-props的坑。在对级页面下，动态绑定props失效的问题以及解决办法。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
     
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://129.211.78.206/posts/2311099782/&title=props动态绑定失效 - JantoK's blog&summary=本章会详细讲述在工作中踩到的一个关于vue-props的坑。在对级页面下，动态绑定props失效的问题以及解决办法。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://129.211.78.206/posts/2311099782/&title=props动态绑定失效 - JantoK's blog&summary=本章会详细讲述在工作中踩到的一个关于vue-props的坑。在对级页面下，动态绑定props失效的问题以及解决办法。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+          <div class="prev-next">
+            
+            
+              <a class='next' href='/posts/2615483405/'>
+                <p class='title'>如何规范的提交commit message<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>如何既不冗余繁琐，又规范地提交git的commit信息。
+
+
+学习本篇前，你必须具备以下知识储备：
+
+熟悉使用git命令行
+
+
+事情起因是入职至今已接近一年，项目和架构管理都没有对git的com...</p>
+              </a>
+            
+          </div>
+        
+      </section>
+    </article>
   
 
-  <section class="widget category shadow desktop">
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box reveal comments shadow">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+          </div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'props动态绑定失效',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+  
+
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/%E5%89%8D%E7%AB%AF/" href="/categories/%E5%89%8D%E7%AB%AF/"
-            id="categoriesE5898DE7ABAF"
-            ><div class='name'>前端</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E5%8D%9A%E5%AE%A2/" href="/categories/%E5%8D%9A%E5%AE%A2/"
-            id="categoriesE58D9AE5AEA2"
-            ><div class='name'>博客</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E5%B7%A5%E4%BD%9C/" href="/categories/%E5%B7%A5%E4%BD%9C/"
-            id="categoriesE5B7A5E4BD9C"
-            ><div class='name'>工作</div><div class='badge'>(1)</div></a></li>
-        
-      </ul>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#起因"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排查"><span class="toc-text">排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档"><span class="toc-text">文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
     </div>
   </section>
 
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/element/" style="font-size: 14px; color: #999">element</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/nuxt/" style="font-size: 14px; color: #999">nuxt</a> <a href="/tags/vue/" style="font-size: 24px; color: #555">vue</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 24px; color: #555">博客</a>
-    </div>
-  </section>
-
-
-  
 
   
 
@@ -728,6 +839,60 @@
 
 
 
+
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"></script>
+
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var meta = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick','mail','link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function(item){
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+  var valine = new Valine();
+  function emoji(path, idx, ext) {
+      return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  valine.init({
+    el: '#valine_container',
+    meta: meta,
+    
+    appId: "bS5ogUcYwM2TheWGJH4CKNWC-gzGzoHsz",
+    appKey: "sLNMoiSrYN740bVKYDYXEHO5",
+    placeholder: "thanks for your advices.",
+    pageSize:'10',
+    avatar:'robohash',
+    lang:'zh-cn',
+    visitor: 'true',
+    highlight: 'true',
+    mathJax: 'false',
+    enableQQ: 'true',
+    requiredFields: requiredFields,
+    emojiCDN: 'https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/emoji/valine/',
+    emojiMaps: emojiMaps
+  })
+  </script>
 
 
 

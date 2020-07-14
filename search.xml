@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>props动态绑定失效</title>
+      <link href="/posts/2311099782/"/>
+      <url>/posts/2311099782/</url>
+      
+        <content type="html"><![CDATA[<p>本章会详细讲述在工作中踩到的一个关于vue-props的坑。在对级页面下，动态绑定props失效的问题以及解决办法。</p><a id="more"></a><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>事情的起因是这样的：需求里要求从A页面中选择并获取到对象列表参数List[object]，把List传给B页面中，在B页面中通过el-collapse将List展开，并且对每个List中的参数通过v-model进行赋值。如图所示：</p><p><img src="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/base/loading.gif" data-original="https://jantok-1302532854.cos.ap-shanghai.myqcloud.com/img/hexo/post/2020-07-14.png" alt="最终效果图"></p><p>自信满满地一顿骚操作后，发现在collapse-item中对于props值的操作<strong>并不生效</strong>。</p><p>于是又哗啦啦地开启了一顿排查。</p><hr><h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>对于其中v-model绑定props更改并不生效的问题，</p><p>同时出现了一些比较奇怪的现象。</p><ul><li><p>props的值可以<strong>正常传递</strong>到collspse中。</p></li><li><p>点击checkbox，<strong>边框会变红，但不会被勾中</strong>，之后“卡死”。</p></li><li><p>在对collspse-item的展开收起中，其实会刷新item里面的想要修改的值，<strong>但只会生效一个</strong>。</p><p>即点击红棋子，然后收起再展开item -》红棋子生效。</p><p>点击红棋子，再点击蓝棋子，然后收起再展开item -》只有蓝棋子生效。</p><p>第二列中的input也是，输入123，然后收起展开item -》只有3生效。</p></li></ul><p>根据这些现象，再继续排查，先排除掉了这些原因：</p><ul><li>将collspse组件去掉，发现仍然无法对list修改，<strong>排除collspse的问题</strong>。</li><li>通过checkbox的change方法，发现赋值是生效的，但是只生效最新的一个，覆盖掉之前生效的。并且视图不会更新。</li><li>将List数据复制到B页面当成本地数据去测试，发现没有问题。</li></ul><p>则<strong>确定了是props的问题</strong>。</p><hr><h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p>由于之前踩过坑，知道无法直接对props值进行更改或者显示，</p><p>所以上述数据中的List都是使用以下形式使用的。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  localList() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.propsList</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>查阅相关文档，最开始从<a href="https://cn.vuejs.org/v2/guide/components-props.html#ad" target="_blank" rel="noopener">官方vue文档</a>入手，发现一下子就找到了答案：</p><blockquote><p>所有的 prop 都使得其父子 prop 之间形成了一个<strong>单向下行绑定</strong>：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。</p></blockquote><p>而解决办法也非常清楚：</p><ol><li><p><strong>这个 prop 用来传递一个初始值；这个子组件接下来希望将其作为一个本地的 prop 数据来使用。</strong>在这种情况下，最好定义一个本地的 data property 并将这个 prop 用作其初始值：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">props: [<span class="string">'initialCounter'</span>],</span><br><span class="line">data: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    counter: <span class="keyword">this</span>.initialCounter</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p><strong>这个 prop 以一种原始的值传入且需要进行转换。</strong>在这种情况下，最好使用这个 prop 的值来定义一个计算属性：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">props: [<span class="string">'size'</span>],</span><br><span class="line">computed: &#123;</span><br><span class="line">  normalizedSize: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.size.trim().toLowerCase()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><blockquote><p>注意在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身<strong>将会</strong>影响到父组件的状态。</p></blockquote><p>原因是<strong>我试用了computed去做数据更改，而不是data</strong>。</p><p>所以解决办法是赋值给一个本地data即可。</p><hr><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>于是乎我很好奇，从最初的A页面开始，到底往下传递了多少层页面。</p><p>查看<a href="https://github.com/JantoK/element/blob/dev/packages/collapse/src/collapse-item.vue" target="_blank" rel="noopener">el-collapse源码</a>，发现其大致结构如下：</p><p>A页面获取List -》 List到页面B -》到collapse -》（通过solt）到collapse-item</p><p>可以把组件理解成是一个子页面，组件内的solt又算是一个子页面。</p><p><strong>而props数据流向只能向下，不能向上，当上层刷新的时候，下层数据也会刷新</strong>。</p><p>所以List到达最底层的item，item里的list数据更新后想向上传递（到collapse）被阻止，但item的展开收起（视图刷新）会对item下的props做一次刷新。</p><hr><p>参考文档：</p><ul><li><p><a href="https://www.zhihu.com/question/37548226" target="_blank" rel="noopener">深入理解solt</a></p></li><li><p><a href="https://cn.vuejs.org/v2/guide/components-props.html#ad" target="_blank" rel="noopener">vue中关于props的描述</a></p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue </tag>
+            
+            <tag> element </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>如何规范的提交commit message</title>
       <link href="/posts/2615483405/"/>
       <url>/posts/2615483405/</url>
@@ -45,9 +72,9 @@
       
         <tags>
             
-            <tag> nuxt </tag>
-            
             <tag> vue </tag>
+            
+            <tag> nuxt </tag>
             
         </tags>
       
